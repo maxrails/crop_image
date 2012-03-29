@@ -43,9 +43,9 @@ module ImageCrop
   def crop(x,y,w,h)
     image_magick = Magick::ImageList.new(FileTest.exist?(self.process_image_path) ? self.process_image_path : Rails.root.to_s+'/public'+image.to_s)
     slice = image_magick.crop(x, y, w, h)
-    white_bg = Magick::Image.new(image_magick.columns, image_magick.rows)
-    image_magick = white_bg.composite(slice, x, y,Magick::OverCompositeOp)
-    image_magick.write(self.process_image_path)
+    #white_bg = Magick::Image.new(image_magick.columns, image_magick.rows)
+    #image_magick = white_bg.composite(slice, x, y,Magick::OverCompositeOp)
+    slice.write(self.process_image_path)
   end
 
   def scale(width,translatex,translatey)
