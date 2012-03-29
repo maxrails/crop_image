@@ -1,0 +1,14 @@
+= form_for @picture, :html=>{:multipart=>true} do |f|
+  -if @picture.errors.any?
+    div id="error_explanation
+      h2="#{pluralize(@picture.errors.count, 'error')} prohibited this picture from being saved:"
+      ul
+        -@picture.errors.full_messages.each do |msg|
+          li=msg
+
+  div class="field"
+    = f.label :image
+    br
+    = f.file_field :image
+  div class="actions"
+    = f.submit

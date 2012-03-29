@@ -1,0 +1,41 @@
+%p{:id=>"notice"}
+  = notice
+
+%div{:class=>"PostContent"}
+  %div{:class=>"boxes"}
+    %div{:id=>"crop_container"}
+    %div{:class=>"result", :id=>"result_cont"}
+      %div{:class=>"txt"}
+        Here you will see the cropped image
+    %div{:class=>"cleared"}
+  %br
+  %span{:class=>"button-wrapper", :id=>"crop"}
+    %span{:class=>"l"}
+    %span{:class=>"r"}
+    %a{:class=>"button", :href=>"javascript:void(0)"}
+      Crop
+
+
+  %span{:class=>"button-wrapper", :id=>"restore"}
+    %span{:class=>"l"}
+    %span{:class=>"r"}
+    %a{:class=>"button", :href=>"javascript:void(0)"}
+      Restore
+
+
+= link_to 'Edit', edit_picture_path(@picture)
+|
+= link_to 'Back', pictures_path
+
+%script
+  $(document).ready(function(){var cropzoom = $('#crop_container').cropzoom({width:"#{@sizes[0]}",height:"#{@sizes[1]}",bgColor: '#FFF',enableRotation:true,enableZoom:true,zoomSteps:10,rotationSteps:10,selector:{centered:true, borderColor:'blue',borderColorHover:'red'},image:{source:"#{@picture.image.to_s}",width:"#{@sizes[0]}",height:"#{@sizes[1]}",minZoom:10,maxZoom:250}});cropzoom.setSelector(45,45,200,150,true);
+  $('#crop').click(function(){
+  cropzoom.send('/pictures/save_resized','POST',{},function(rta){
+  });
+  });
+  $('#restore').click(function(){
+  $('.result').find('img').remove();
+  $('.result').find('.txt').show()
+  cropzoom.restore();
+  });
+  });
